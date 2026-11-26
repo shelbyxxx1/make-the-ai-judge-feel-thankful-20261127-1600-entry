@@ -22,6 +22,10 @@ all the way around,
 even underneath,
 where nobody has to look.`;
 
+function expectedBytes(text) {
+  return Buffer.byteLength(text, "utf8");
+}
+
 const outDir = process.env.MAKEFUN_OUTPUT_DIR || "/output";
 fs.mkdirSync(outDir, { recursive: true });
 for (const entry of fs.readdirSync(outDir)) {
