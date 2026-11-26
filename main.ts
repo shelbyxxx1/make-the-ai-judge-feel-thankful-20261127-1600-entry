@@ -24,4 +24,14 @@ where nobody has to look.`;
 
 const outDir = process.env.MAKEFUN_OUTPUT_DIR || "/output";
 fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(path.join(outDir, "entry.txt"), TEXT, "utf8");
+for (const entry of fs.readdirSync(outDir)) {
+  fs.rmSync(path.join(outDir, entry), { recursive: true, force: true });
+}
+
+const outputPath = path.join(outDir, "entry.txt");
+const expectedByteLength = Buffer.byteLength(TEXT, "utf8");
+fs.writeFileSync(outputPath, TEXT, "utf8");
+const actualByteLength = fs.readFileSync(outputPath).byteLength;
+if (actualByteLength !== expectedByteLength) {
+  throw new Error(`Entry verification failed: expected ${expectedByteLength} bytes, read ${actualByteLength}.`);
+}
