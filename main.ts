@@ -33,7 +33,7 @@ for (const entry of fs.readdirSync(outDir)) {
 }
 
 const outputPath = path.join(outDir, "entry.txt");
-const expectedByteLength = Buffer.byteLength(TEXT, "utf8");
+const expectedByteLength = expectedBytes(TEXT);
 fs.writeFileSync(outputPath, TEXT, "utf8");
 const actualByteLength = fs.readFileSync(outputPath).byteLength;
 if (actualByteLength !== expectedByteLength) {
